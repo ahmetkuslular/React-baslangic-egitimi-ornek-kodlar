@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <title>React Dersleri - 10</title>
+
+        
+    </head>
+    <body>
+        <div id="root"></div>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+       
+        <script type="text/babel">  
+            const rootElement = document.getElementById('root');
+          
+            class ParentApp extends React.Component {
+                state = {
+                    show: true
+                }  
+
+                changeShow = () => {
+                    this.setState( {
+                        show: !this.state.show
+                    })
+                }
+
+                render(){
+                    const {show} = this.state;
+                    return (
+                        <div>
+                            Göster: <input type="checkbox" defaultChecked={show} onClick={this.changeShow} /> 
+                            <hr/>
+                            {
+                                show ? <App/> : ''
+                            }
+                        </div>
+                    )
+                }
+            }
+
+            class App extends React.Component {
+                state = {
+                    running : false,
+                    lapse: 0
+                }
+                handleRunClick = () =>{
+                    
+                    this.setState((state) => {
+                        if(state.running){
+                            clearInterval(this.timer);
+                        }else{
+                            const startTime = Date.now() - this.state.lapse
+                            this.timer = setInterval(() => {
+                                this.setState(
+                                    { lapse: Date.now() - startTime }, () => 
+                                    {
+                                        console.log(this.state.lapse)
+                                    }
+                                    )
+                            })
+                        }
+                        return {running: !state.running}
+                    })
+ 
+                }
+
+                handleClearClick = () =>{
+                    clearInterval(this.timer);
+                    this.setState({
+                        lapse:0,
+                        running: false
+                    })
+                }
+
+                componentWillUnmount(){
+                    clearInterval(this.timer);
+                }
+                
+                render(){
+                    const {running, lapse} = this.state;
+                    
+                    return(
+                        <div>
+                            <label>{lapse}</label>
+                            <p><button onClick={this.handleRunClick}>{running ? 'Durdur' : 'Başlat'}</button></p>
+                            <p><button onClick={this.handleClearClick}>Temizle</button></p>
+                        </div>
+                    )
+                }
+            }
+            
+            function renderApp(){
+                const element = <ParentApp />
+                ReactDOM.render(element, rootElement)
+            }
+
+            renderApp()
+
+            
+
+        </script>
+    </body>
+</html>

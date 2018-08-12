@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>React Dersleri - 02</title>
+
+        
+    </head>
+    <body>
+        <div id="root"></div>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+        <script type="text/babel">  
+            const rootElement = document.getElementById('root');
+            // const element = document.createElement('div');
+            // element.textContent = "hello world";
+            // element.className = 'container';
+            // rootElement.appendChild(element);
+            
+            const content = 'Hello World';
+            const myClassName = 'container';
+            const props = {
+                className : 'container',
+                children: 'Hello world'
+            }
+            const element =  <div {...props}/>
+            
+            console.log(element);
+
+            ReactDOM.render(element, rootElement);
+
+
+        </script>
+    </body>
+</html>

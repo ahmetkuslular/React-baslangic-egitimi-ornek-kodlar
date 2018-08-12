@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>React Dersleri - 09</title>
+
+        
+    </head>
+    <body>
+        <div id="root"></div>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+       
+        <script type="text/babel">  
+            const rootElement = document.getElementById('root');
+            
+            class App extends React.Component {
+                state = {
+                    running : false,
+                    count: 0
+                }
+                handleRunClick = () =>{
+                    
+                    this.setState((state) => {
+                        if(state.running){
+                            clearInterval(this.timer);
+                        }else{
+                            const startTime = Date.now() - this.state.count
+                            this.timer = setInterval(() => {
+                                this.setState({ count: Date.now() - startTime })
+                            })
+                        }
+                        return {running: !state.running}
+                    })
+ 
+                }
+
+                handleClearClick = () =>{
+                    clearInterval(this.timer);
+                    this.setState({
+                        count:0,
+                        running: false
+                    })
+                }
+                render(){
+                    const {running, count} = this.state;
+                    return(
+                        <div>
+                            <label>{count}</label>
+                            <p><button onClick={this.handleRunClick}>{running ? 'Durdur' : 'Başlat'}</button></p>
+                            <p><button onClick={this.handleClearClick}>Temizle</button></p>
+                        </div>
+                    )
+                }
+            }
+
+            function renderApp(){
+                const element = <App />
+                ReactDOM.render(element, rootElement)
+            }
+
+            renderApp()
+
+            
+
+        </script>
+    </body>
+</html>

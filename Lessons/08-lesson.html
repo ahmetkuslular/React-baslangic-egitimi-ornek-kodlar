@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>React Dersleri - 08</title>
+
+        
+    </head>
+    <body>
+        <div id="root"></div>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+       
+        <script type="text/babel">  
+            const rootElement = document.getElementById('root');
+            const state = {
+                count: 0,
+                username: ''
+            }
+            
+            function increment(){
+                setState({
+                    count: state.count+1
+                })
+            }
+            
+            function changeUserName(event){
+                setState({
+                    username: event.target.value
+                })
+            }
+
+            function App() {
+                return (
+                    <div>
+                        <p>Sayac {state.count} </p>
+                        <p><button onClick={increment}>Tıkla</button></p>
+                        <p>Isım: {state.username}</p>
+                        <p><input onChange={changeUserName}/></p>
+                    </div>
+                )
+            }
+            
+            
+            function setState(newState){
+                Object.assign(state,newState);
+                renderApp()
+            }
+
+            function renderApp(){
+                const element = <App/>
+                ReactDOM.render(element, rootElement)
+            }
+
+            renderApp()
+
+            
+
+        </script>
+    </body>
+</html>

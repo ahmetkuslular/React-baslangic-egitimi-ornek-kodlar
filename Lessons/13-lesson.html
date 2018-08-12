@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <title>React Dersleri - 13</title>
+
+        
+    </head>
+    <body>
+        <div id="root"></div>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+       
+        <script type="text/babel">  
+            const rootElement = document.getElementById('root');
+            
+            class MyForm extends React.Component {
+                static availableOptions =  [
+                    'elma',
+                    'portakal',
+                    'armut',
+                    'muz',
+                    'kiraz',
+                    'karpuz',
+                    'kavun'
+                ]
+                
+                state = {
+                    multiline: '',
+                    text: '',
+                    multiSelect: []
+                }
+
+                handleTextChange = event => {
+                    const {value} = event.target
+                    const allValues = value.split(',').map((v) => v.trim()).filter(Boolean)
+                    this.setState({
+                        text:value,
+                        multiline: allValues.join('\n'),
+                        multiSelect: allValues.filter(v => MyForm.availableOptions.includes(v))
+                    })
+                }
+
+                handleMultilineChange = event => {
+                    const {value} = event.target
+                    const allValues = value.split('\n').map(v => v.trim()).filter(Boolean);
+                    this.setState({
+                        multiline:value,
+                        text: allValues.join(','),
+                        multiSelect: allValues.filter(v => MyForm.availableOptions.includes(v))
+                    })
+                }
+
+                handleSelectChange = event => {
+                    const allValues = Array.from(event.target.selectedOptions).map(o => o.value)
+
+                    this.setState({
+                        multiSelect: allValues,
+                        text: allValues.join(','),
+                        multiline: allValues.join('\n')
+                    })
+                }
+                render(){
+                    const {text, multiline,multiSelect} = this.state;
+                    return (
+                        <form>
+                            <div>
+                                <label>Düz Metin</label>
+                                <br/>
+                                <input 
+                                    type="text"
+                                    value={text}
+                                    onChange={this.handleTextChange}
+                                />
+                            </div>
+                            <br/>
+                            <div>
+                                <label>Çoklu Satır</label>
+                                <br/>
+                                <textarea
+                                    rows={5}
+                                    value={multiline} 
+                                    onChange={this.handleMultilineChange}
+                                />
+                            </div>
+                            <br/>
+                            <div>
+                                <label>Çoklu Seçim</label>
+                                <br/>
+                                <select
+                                    multiple 
+                                    size={MyForm.availableOptions.length}
+                                    onChange={this.handleSelectChange}
+                                    value={multiSelect}
+                                    
+                                >
+                                {
+                                    MyForm.availableOptions.map(optionValue => (
+                                        <option key={optionValue} value={optionValue}>{optionValue}</option>
+                                    ))
+                                }
+                                </select>
+                            </div>
+                        </form>
+                    )
+                }
+            }
+            
+            function renderApp(){
+                const element = <MyForm />
+                ReactDOM.render(element, rootElement)
+            }
+
+            renderApp()
+
+            
+
+        </script>
+    </body>
+</html>

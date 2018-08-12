@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>React Dersleri - 04</title>
+
+        
+    </head>
+    <body>
+        <div id="root"></div>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+        <script type="text/babel">  
+            const rootElement = document.getElementById('root');
+            
+            function  SayHello(props) {
+                return (
+                    <div>
+                        Hello {props.firstName} {props.lastName}
+                    </div>
+                )
+            }
+            
+            // const PropTypes = {
+            //     string(props, propName, componentName){
+            //         if(typeof props[propName] !== 'string'){
+            //             return new Error(`Bu alan string olmalı. ${componentName} içerisindeki ${propName} ${typeof props[propName]} olamaz!`);
+            //         }
+            //     }
+            // }
+            
+            SayHello.propTypes = {
+                firstName: PropTypes.string.isRequired,
+                lastName: PropTypes.string.isRequired
+            }
+            const element = <SayHello firstName={true} />
+            ReactDOM.render(element, rootElement);
+
+        </script>
+    </body>
+</html>
